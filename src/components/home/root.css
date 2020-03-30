@@ -1,0 +1,18 @@
+.codechef-logo{
+     max-width: 100px !important;
+     max-height: 100px !important;  
+     margin: 20px !important;
+}
+.root-container{
+     position: absolute !important;
+     left : 50% !important;
+     top : 50% !important;
+     transform: translate(-50%, -50%) !important;
+}
+.footer{
+     position: absolute;
+     bottom : 0;
+     right: 0;
+     width: 100%;
+     padding : 15px;
+}

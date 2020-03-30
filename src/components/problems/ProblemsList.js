@@ -1,0 +1,151 @@
+import React, { Component } from 'react'
+import NavBar from '../navbar/nav';
+import axios from 'axios';
+import {Link ,Redirect} from 'react-router-dom';
+import Timer from '../timer/Timer';
+import Utils from '../Utils/utils';
+
+export default class ProblemsList extends Component {
+
+     state ={
+          problems : [],
+          loading : true,
+          contestProblemsList : [],
+     }
+     componentDidMount(){
+          let path = `https://api.codechef.com/contests/${localStorage.getItem('contestCode')}`;
+          axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
+          .then(res=>{
+               const data = res.data.result.data.content.problemsList;
+               this.setState({
+                    contestProblemsList : data 
+               } ,()=> this.makeRequestForEachProblemUtil(data))
+          }).catch(err=> {
+               try{
+                    if(err.response.status===401){
+                         Utils.generateAccessToken();
+                         alert('Some error occured...please refresh page')
+                    }
+               }catch(e){
+                    
+                    alert('Some error occured...please refresh page or login')
+                    console.log(err)
+               }
+          })
+     }
+     makeRequestForEachProblemUtil = (data)=>{
+               data.forEach(problem => {
+                   this.makeRequestForEachProblem(problem.problemCode)
+               });
+     }
+     makeRequestForEachProblem = (problemCode)=>{
+          let path = `https://api.codechef.com/contests/${localStorage.getItem('contestCode')}/problems/${problemCode}`
+          let toggle = true;
+          if(localStorage.getItem('problemsList')!==null)
+          {
+               let list =JSON.parse(localStorage.getItem('problemsList'));
+               if(list.find(x=> x.problemCode === problemCode)){
+                    toggle = false;
+               }
+          }
+          if(localStorage.getItem('problemsList')===null || toggle)
+          {
+               axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
+               .then(res=>{
+                    this.setState({
+                         problems : [...this.state.problems , res.data.result.data.content]
+                    } , ()=> localStorage.setItem('problemsList' , JSON.stringify(this.state.problems)));
+                    const data = JSON.stringify(res.data.result.data.content);
+               }).catch(err=> {
+                    try{
+                         if(err.response.status==401){
+                              Utils.generateAccessToken();
+                              alert('Some error occured...please refresh page')
+                         }
+                    }catch(e){
+                         
+                         alert('Some error occured...please refresh page or login')
+                         console.log(err)
+                    }
+               })
+          }
+          this.setState({
+               loading : false
+          })
+     }
+     renderRedirect = () => {
+          if(localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'){
+               return <Redirect to='/dashboard' />
+          }
+          return null;
+     }
+     render() {
+          const { loading ,contestProblemsList} = this.state;
+          const problems =JSON.parse(localStorage.getItem('problemsList')) ;
+          const problemsList = (contestProblemsList.length && problems) ?   problems.map(problem=>{
+               let obj = contestProblemsList.find(o=> o.problemCode === problem.problemCode);
+               // console.log(obj);
+               let accuracy = 0;
+               try{
+                    accuracy = obj.accuracy;
+                    accuracy = accuracy.toFixed(2)
+               }
+               finally{
+               return(
+                    <tr key={problem.problemCode} >
+                         <td >
+                              <Link to={`/problems/${problem.problemCode}`}>{problem.problemName}</Link>
+                         </td>
+                         <td >
+                              <Link to={`/problems/${problem.problemCode}`}>{problem.problemCode}</Link>
+                         </td>
+                         <td>
+                              {problem.successfulSubmissions}
+                         </td>
+                         <td>
+                              {accuracy}
+                         </td>
+                    </tr>
+               )
+          }
+          }) : null;
+
+          let showop;
+          if(loading) {
+               showop = <h4 className="center">Loading Problems</h4>
+          }
+          else{
+               showop = problemsList ?  <table className="highlight centered responsive-table">
+                                   <thead>
+                                        <tr>
+                                        <th>Name</th>
+                                        <th>Code</th>
+                                        <th>Sucessful Submissions</th>
+                                        <th>Accuracy</th>
+                                        {/* you can add submit button also */}
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        {problemsList}
+                                   </tbody>
+                         </table>
+                         : null
+          }
+          return (
+               <div className="wrapper">
+                    <NavBar></NavBar>
+                    <div className="container" >
+                         {this.renderRedirect()}
+                         <div className="row"style={{marginTop : 100}} >
+                              <div className="col l8">
+                                  {showop}                                  
+                              </div>
+                              <div className="col l4 center-align">
+                                   <Timer/>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          )
+     }
+}

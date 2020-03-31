@@ -8,8 +8,8 @@ const Utils = {
                'api_endpoint': 'https://api.codechef.com/',
                'authorization_code_endpoint': 'https://api.codechef.com/oauth/authorize',
                'access_token_endpoint': 'https://api.codechef.com/oauth/token',
-               'redirect_uri': 'http://localhost:3000/dashboard',
-               'website_base_url' : 'http://localhost:3000/'
+               'redirect_uri': 'https://chefs-arena-rohit.netlify.com/dashboard',
+               'website_base_url' : 'https://chefs-arena-rohit.netlify.com/'
           };
           let oauth_config = {
                "grant_type": "authorization_code",
@@ -38,8 +38,8 @@ const Utils = {
                'api_endpoint': 'https://api.codechef.com/',
                'authorization_code_endpoint': 'https://api.codechef.com/oauth/authorize',
                'access_token_endpoint': 'https://api.codechef.com/oauth/token',
-               'redirect_uri': 'http://localhost:3000/dashboard',
-               'website_base_url' : 'http://localhost:3000/'
+               'redirect_uri': 'https://chefs-arena-rohit.netlify.com/dashboard',
+               'website_base_url' : 'https://chefs-arena-rohit.netlify.com/'
           };
           let oauth_details = {
                'authorization_code' : localStorage.getItem('authorization_code'),

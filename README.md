@@ -1,14 +1,14 @@
 
 # Chefs Arena
 
-##Links :
+## Links :
 
 > [Website URL](https://chefs-arena-rohit.netlify.com/) <br/>
 > [Presentation URL](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit#slide=id.g829ca34cd3_3_1)<br/>
 > [Youtube Video URL](https://youtu.be/0TGNclKw8Q4) <br/>
 
 
-##Instructions to run it locally  :
+## Instructions to run it locally  :
 - Clone the repo
 - Install **nodejs - 10.x** along with npm.
 - `$ npm install`

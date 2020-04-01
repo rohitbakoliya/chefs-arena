@@ -4,23 +4,32 @@ import axios from 'axios';
 import {Link, NavLink } from 'react-router-dom';
 import Utils from '../Utils/utils';
 import OngoingTimer from './OngoingTimer';
+import Preloader from '../Preloader/Preloader';
 
+import RecentSubmissions from './RecentSubmissions/RecentSubmissions'
 export default class OngoingProblemsList extends Component {
 
      state ={
           problems : [],
           loading : true,
           contestProblemsList : [],
+          showIcon : 'add',
+          noProblem : false
      }
      componentDidMount(){
           let path = `https://api.codechef.com/contests/${localStorage.getItem('OngoingcontestCode')}`;
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
                const data = res.data.result.data.content.problemsList;
+               if(data.length === 0){
+                    this.setState({
+                         noProblem : true
+                    })
+               }
                // console.log(res);
                this.setState({
                     contestProblemsList : data ,
-                    loading : false
+                    loading : false,
                })
           }).catch(err=> {
                try{
@@ -35,8 +44,14 @@ export default class OngoingProblemsList extends Component {
                }
           })
      }
+     handleSubmissions = ()=>{
+          this.setState({
+               showIcon : this.state.showIcon === 'add' ? 'close' : 'add'
+          });
+     }
+
      render() {
-          const { loading ,contestProblemsList} = this.state;
+          const { loading ,contestProblemsList , showIcon } = this.state;
 
           const problemsList = (contestProblemsList) ?   contestProblemsList.map(problem=>{
                let accuracy = 0;
@@ -66,7 +81,11 @@ export default class OngoingProblemsList extends Component {
 
           let showop;
           if(loading) {
-               showop = <h4 className="center">Loading Problems</h4>
+               showop = <div style={{  position: 'absolute',
+                    top: '50%',
+                    left: '40%',
+                    transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
+               //<h4 className="center">Loading Problems</h4>
           }
           else{
                showop = problemsList ?<div className="contest">  
@@ -92,7 +111,7 @@ export default class OngoingProblemsList extends Component {
                <div className="wrapper">
                     <NavBar></NavBar>
                     <div className="container" >
-                         
+                         {this.state.noProblem ? <div className="center"><h4 >Oops!!! Contest doesn't has any problem</h4> <p>*It might happens when contest has any subcontest</p></div> :
                          <div className="row">
                               <div className="col l8">
                                   {showop}                                  
@@ -108,10 +127,17 @@ export default class OngoingProblemsList extends Component {
                                              </div>
                                         </div>
                                    </div>
-                                   
-                              
+                                   <div className="card">
+                                        <div className="card-content">
+                                             <div className="card-title">
+                                                  <strong>Recent Activity</strong> 
+                                                  <i style={{cursor : 'pointer'}} onClick={this.handleSubmissions} className="material-icons right grey-text">{showIcon}</i>
+                                             </div>
+                                             {showIcon==='close' ? <RecentSubmissions contestCode={ localStorage.getItem('OngoingcontestCode')}/> : null}
+                                        </div> 
+                                   </div>
                               </div>
-                         </div>
+                         </div>}
                     </div>
                </div>
           )

@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import NavBar from '../navbar/nav';
 import convertToHTML from 'markdown-to-html-converter';
-import '../problems/Problem.css';
+import '../virtual/problems/Problem.css';
 import OngoingTimer from './OngoingTimer';
-import {Redirect} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import axios from 'axios'
 import Utils from '../Utils/utils'
+import SuccessfulSubmissions from './SuccessfulSubmissions/SuccessfulSubmissions';
+import Preloader from '../Preloader/Preloader';
+
 
 export default class OngoingProblem extends Component {
 
@@ -18,6 +21,8 @@ export default class OngoingProblem extends Component {
           sourceSizeLimit : '',
           maxTimeLimit : '',
           body : '',
+          contestCode : '',
+          showIcon : 'add',
      }
      componentDidMount(){
           let problemCode = this.props.match.params.problemCode;
@@ -26,7 +31,7 @@ export default class OngoingProblem extends Component {
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
                .then(res=>{
                     const content = res.data.result.data.content;
-                    console.log(content);
+                    // console.log(content , contestCode);
                     this.setState({
                          loading : false,
                          problemCode : content.problemCode,
@@ -36,41 +41,62 @@ export default class OngoingProblem extends Component {
                          sourceSizeLimit : content.sourceSizeLimit,
                          maxTimeLimit : content.maxTimeLimit,
                          body : content.body,
+                         contestCode : contestCode
                     } , ()=>{
                          
-                         let body = this.state.body;
-                         body = body.replace(/<br ?\/?>/g, "\n");
-                         // TODO : use mathjax instead of this
+                         var body = this.state.body;
+                         var tempbody = body;
+                         var err = false
+                         try{
+                              tempbody = tempbody.replace(/<br ?\/?>/g, "\n");
+                         }catch(e){
+                              err = true;
+                         }
+                         if(!err){
+                              body = tempbody;
+                         }
                          body = body.replace(/\\le/g , "&lt;");
                          const markdownStr = body;
-                         const htmlStr = convertToHTML(markdownStr);
-                         document.getElementById('body').innerHTML = htmlStr;
+                         try{
+                              const htmlStr = convertToHTML(markdownStr);
+                              document.getElementById('body').innerHTML = htmlStr;
+                         } catch(err){
+                              const errLog = '<code className="center-align">OOps! Some Error occured While converting Markdown</code>'
+                              document.getElementById('body').innerHTML = errLog;
+                         }
+                         
                          this.setState({
                               loading : false
                          }) 
                     });     
           }).catch(err=> {
                try{
-                    if(err.response.status==401){
+                    if(err.response.status===401){
                          Utils.generateAccessToken();
                          alert('Some error occured...please refresh page')
                     }
                }catch(e){
-                    
                     alert('Some error occured...please refresh page or login')
                     console.log(err)
                }
                
-          })
-          
+          }) 
+     }
+     handleSubmissions = ()=>{
+          this.setState({
+               showIcon : this.state.showIcon === 'add' ? 'close' : 'add'
+          });
      }
      render() {
 
-          const {loading , problemCode, problemName , author , dateAdded , sourceSizeLimit , maxTimeLimit ,body} = this.state;
+          const {loading , problemCode, problemName , author , dateAdded , sourceSizeLimit , maxTimeLimit , contestCode , showIcon } = this.state;
           let showOutput ;
           let submitLink = `https://www.codechef.com/submit/${problemCode}`;
           if(loading){
-               showOutput = <h4 className="center">Loading...</h4>
+               showOutput = <div style={{  position: 'absolute',
+               top: '50%',
+               left: '50%',
+               transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }else{
               showOutput =  <div className="card-panel">
                               <div className="card-title">
@@ -82,11 +108,11 @@ export default class OngoingProblem extends Component {
                                    |  &nbsp; Problem Code : {problemCode}
                                         </div>
                                         <div className="col l4 center">
-                                                  <a style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={'/run/' + problemCode} className="btn waves-effect waves-light submit">
+                                                  <NavLink style={{marginRight : 8}}   to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">code</i>
                                                        RUN
-                                                  </a>
-                                                  <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  </NavLink>
+                                                  <a target="_blank" rel="noopener noreferrer"   href={submitLink} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">send</i>
                                                        SUBMIT
                                                   </a>
@@ -100,11 +126,11 @@ export default class OngoingProblem extends Component {
                                       Problem Code : {problemCode}
                                         </div>
                                         <div style={{marginTop : 10}} className="col l4 s12 center">
-                                             <a style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={'/run/' + problemCode} className="btn waves-effect waves-light submit">
+                                             <NavLink style={{marginRight : 8}}  to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                   <i className="material-icons left hide-on-small-only">code</i>
                                                   RUN
-                                             </a>
-                                             <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'} href={submitLink} className="btn waves-effect waves-light">
+                                             </NavLink>
+                                             <a target="_blank" rel="noopener noreferrer"  href={submitLink} className="btn waves-effect waves-light">
                                                   <i className="material-icons left  hide-on-small-only">send</i>
                                                   SUBMIT
                                              </a>
@@ -115,7 +141,7 @@ export default class OngoingProblem extends Component {
                               <br/>
                               <div className="card-content">
                                    <div className="row">
-                                        <div className="col l8 m8 s12 sub-container">
+                                        <div className="col l8 m12 s12 sub-container">
                                              <div id="body" className="browser-default"></div>
                                              <table className="responsive-table striped grey lighten-3 centered">
                                                   <tbody>
@@ -141,11 +167,11 @@ export default class OngoingProblem extends Component {
                                              <div className="divider grey darken-2"></div>
                                              <br/>
                                              <div className="submit-btn center-align">
-                                                  <a style={{marginRight : 20}}  disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  <NavLink style={{marginRight : 20}}    to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                             <i className="material-icons left hide-on-small-only">code</i>
                                                             RUN
-                                                  </a>
-                                                  <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  </NavLink>
+                                                  <a target="_blank" rel="noopener noreferrer" href={submitLink} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">send</i>
                                                        SUBMIT
                                                   </a>
@@ -153,15 +179,22 @@ export default class OngoingProblem extends Component {
                                              </div>
                                         </div>
                     {/* SECOND COLUMN TIMER AND ALL */}
-                                        <div className="col l4 m4 s12">
+                                        <div className="col l4 m12 s12">
                                              <OngoingTimer/>
-                                             <div className="card">current submissions</div>
+                                             <div className="card">
+                                                  <div className="card-content">
+                                                       <div className="card-title">
+                                                            <strong>Recent Submissions</strong> 
+                                                            <i style={{cursor : 'pointer'}} onClick={this.handleSubmissions} className="material-icons right grey-text">{showIcon}</i>
+                                                       </div>
+                                                       {showIcon==='close' ? <SuccessfulSubmissions problemCode={problemCode} contestCode={contestCode}/> : null}
+                                                  </div> 
+                                             </div>
                                         </div>
                                    </div>
                               </div>
                          </div>
           }
-
           return (
                <div className="wrapper">
                     <NavBar/>

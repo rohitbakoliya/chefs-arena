@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import {NavLink } from 'react-router-dom';
-import NavBar from '../navbar/nav';
+import NavBar from '../../navbar/nav';
 import './selectVirtual.css';
-import Utils from '../Utils/utils';
-// import axios from 'axios'
+import Utils from '../../Utils/utils';
 
 export default class SelectVirtual extends Component {
 
      state = {
           route : '/virtual',
-          loading : true
+          loading : true,
+          aleady : false
      }
      injectOnReadyScript(){
           const script = document.createElement("script");
@@ -20,10 +20,13 @@ export default class SelectVirtual extends Component {
                .then(res => res.json())
                .then(res=>{
                     try{
-                         const data = res.result.data.content.contestList;
+                         var data = res.result.data.content.contestList;
                          const contestList = JSON.stringify(res.result.data.content.contestList);
                          localStorage.setItem('contestList' , contestList);
                          let dataForAutoComplete = {};
+                         data = data.filter((contest)=>{
+                              return contest.code.match(/cook/gi) || contest.name.match(/cook/gi) || contest.code.match(/ltime/gi) || contest.name.match(/lunch\s?time/gi);
+                         })
                          data.forEach( contest => {
                               dataForAutoComplete[contest.code] = null;
                               dataForAutoComplete[contest.name] = null;
@@ -34,7 +37,7 @@ export default class SelectVirtual extends Component {
                               onAutocomplete : function(val){
                                    let objName = data.find(o => o.name === val);
                                    let objCode = data.find(o => o.code === val);
-                                   console.log(objName ,objCode );
+                                   // console.log(objName ,objCode );
                                    let obj = {};
                                    if(objName===undefined){
                                         obj = objCode;
@@ -85,7 +88,10 @@ export default class SelectVirtual extends Component {
                let dataForAutoComplete = {};
                
 // TODO : forEach makes async try to make it sync
-
+               contestList = contestList.filter((contest)=>{
+                    return contest.code.match(/cook/gi) || contest.name.match(/cook/gi) || contest.code.match(/ltime/gi) || contest.name.match(/lunch\s?time/gi);
+               })
+               console.log(contestList);
                contestList.forEach( contest => {
                     dataForAutoComplete[contest.code] = null;
                     dataForAutoComplete[contest.name] = null;
@@ -96,7 +102,7 @@ export default class SelectVirtual extends Component {
                     onAutocomplete : function(val){
                          let objName = contestList.find(o => o.name === val);
                          let objCode = contestList.find(o => o.code === val);
-                         console.log(objName ,objCode );
+                         // console.log(objName ,objCode );
                          let obj = {};
                          if(objName===undefined){
                               obj = objCode;
@@ -134,20 +140,43 @@ export default class SelectVirtual extends Component {
           if(localStorage.getItem('status')===401){
                Utils.generateAccessToken();
           }
+          if(localStorage.getItem('contestStatus')==='Contest has ended'){
+               localStorage.removeItem('contestStatus');
+               localStorage.removeItem('contestCode');
+               localStorage.removeItem('contestDetails');
+               localStorage.removeItem('ProblemsList');
+               localStorage.removeItem('endDate');
+               localStorage.removeItem('startDate');
+          }else if(localStorage.getItem('contestStatus')==='Running'){
+               this.setState({
+                    aleady : true
+               })
+          }
      }
 
      handleRegister = (e) => {
           let contestCode = localStorage.getItem('contestCode');
           if(contestCode===null){
-               console.log(contestCode , 'invalide contest');
+               alert('invalide contest');
           }
           else{
                this.setState({
                     route : `${localStorage.getItem('contestCode')}/problems`,
-               }, ()=> console.log(localStorage.getItem('contestCode')))
+               })
           }
+          
      }
-
+     handleEnd = ()=>{
+          this.setState({
+               aleady : false
+          })
+          localStorage.removeItem('contestStatus');
+          localStorage.removeItem('contestCode');
+          localStorage.removeItem('contestDetails');
+          localStorage.removeItem('ProblemsList');
+          localStorage.removeItem('endDate');
+          localStorage.removeItem('startDate');
+     }
      render() {
           return (
                <div className="wrapper">
@@ -174,6 +203,20 @@ export default class SelectVirtual extends Component {
                                    <li>If you've seen these problems, a virtual contest is not for you - solve these problems in the archive.</li>
                                    <li>If you just want to solve some problem from a contest, a virtual contest is not for you - solve this problem in the archive.</li>
                                    <li>Never use someone else's code, read the tutorials or communicate with other person during a virtual contest.</li>
+                         </div>
+                         <div className="already center ">
+                             {this.state.aleady ? <div className="card-panel red lighten-4" style={{height: 100}}>
+                                   <div className="row valign-wrapper">
+                                        <strong className="red-text col left-align">Virtual Contest is Already Running</strong> 
+                                        <div className="input-field col">
+                                             <NavLink to='/problems' className="btn waves-effect waves-light green">Go to Contest</NavLink>     
+                                        </div>
+                                        <div className="input-field col right">
+                                             <div onClick={this.handleEnd}  className="btn waves-effect waves-light red">End Contest</div>     
+                                        </div>      
+                                   </div>
+                                  
+                             </div> : null}  
                          </div>
                     </div>
                     <div ref={el => (this.instance = el)}></div>

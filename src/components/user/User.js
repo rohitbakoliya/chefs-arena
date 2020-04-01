@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NavBar from '../navbar/nav';
 import axios from 'axios';
 import Utils from '../Utils/utils';
-
+import Preloader from '../Preloader/Preloader'
 export default class User extends Component {
      state = {
           username : '',
@@ -25,7 +25,7 @@ export default class User extends Component {
           axios.get( "https://api.codechef.com/users/me" , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
                let data = res.data.result.data.content;
-               console.log(data);
+               // console.log(data);
                this.setState({
                     username : data.username,
                     fullname : data.fullname,
@@ -47,7 +47,7 @@ export default class User extends Component {
                localStorage.setItem('username' , data.username);
           }).catch(err=> {
                try{
-                    if(err.response.status==401){
+                    if(err.response.status===401){
                          Utils.generateAccessToken();
                          alert('Some error occured...please refresh page')
                     }
@@ -102,8 +102,8 @@ export default class User extends Component {
            this.instance.appendChild(script);
      }
      render() {
-          const {username , fullname , country ,state ,city ,organization,occupation ,globalRanking ,countryRanking ,
-          rating,submissionStats,partiallySolved ,solved ,attempted , band } = this.state;
+          const {username , fullname , country ,state ,city ,organization ,globalRanking ,countryRanking ,
+          rating,partiallySolved ,solved  , band } = this.state;
 
           let stars = [];
           let parsedBand = parseInt(band[0]);
@@ -175,7 +175,7 @@ export default class User extends Component {
                                    <tbody>
                                         <tr>
                                         <td>Username: </td>
-                                        <td><span className={colour}>{band}</span>&nbsp;<a href={'https://www.codechef.com/users/' + username} target="_blank" style={{color : 'black'}} >{username}</a></td>
+                                        <td><span className={colour}>{band}</span>&nbsp;<a href={'https://www.codechef.com/users/' + username} rel="noopener noreferrer" target="_blank" style={{color : 'black'}} >{username}</a></td>
                                         </tr>
                                         <tr>
                                         <td>Country: </td>
@@ -211,7 +211,10 @@ export default class User extends Component {
                          {partially}
                     </div>
                </div>
-          : null;
+          : <div style={{  position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'}}><Preloader/></div> ;
 
 
 

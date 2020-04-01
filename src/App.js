@@ -2,9 +2,9 @@ import React , { Component} from 'react';
 import {BrowserRouter , Switch , Route} from 'react-router-dom';
 import Root from './components/home/root';
 import Dashboard from './components/dashboard/dashboard';
-import SelectVirtual from './components/selectContest/selectVirtual';
-import Problem from './components/problems/Problem';
-import ProblemsList from './components/problems/ProblemsList'
+import SelectVirtual from './components/virtual/selectContest/selectVirtual';
+import Problem from './components/virtual/problems/Problem';
+import ProblemsList from './components/virtual/problems/ProblemsList'
 import Timer from './components/timer/Timer';
 import User from './components/user/User';
 import Run from './components/run/run'

@@ -20,7 +20,7 @@ const Ranks = ({ ranks, loading }) => {
                 {rank.countryCode}
               </td>
               <td >
-               <a href={"https://www.codechef.com/users/" + rank.username } target="_blank">{rank.username}</a> 
+               <a href={"https://www.codechef.com/users/" + rank.username } rel="noopener noreferrer" target="_blank">{rank.username}</a> 
               </td>
               <td >
               {totalScore}

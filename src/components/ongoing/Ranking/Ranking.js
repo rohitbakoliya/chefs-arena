@@ -4,6 +4,8 @@ import Pagination from './Pagination';
 import axios from 'axios';
 import Utils from '../../Utils/utils'
 import NavBar from '../../navbar/nav';
+import Preloader from '../../Preloader/Preloader';
+
 const Ranking = (props) => {
   const [ranks, setRanks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,7 @@ const Ranking = (props) => {
       setLoading(true);
       await axios.get(`https://api.codechef.com/rankings/${localStorage.getItem('OngoingcontestCode')}`  , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
       .then(res =>{
-        console.log(res.data.result.data.content);
+        // console.log(res.data.result.data.content);
         setRanks(res.data.result.data.content);
         setLoading(false);
       }).catch(err=>{
@@ -36,7 +38,7 @@ const Ranking = (props) => {
     fetchRanks();
   }, []);
 
-  // Get current posts
+  // Get current ranks
   const indexOfLastRank = currentPage * ranksPerPage;
   const indexOfFirstRank = indexOfLastRank - ranksPerPage;
   const currentRanks = ranks.slice(indexOfFirstRank, indexOfLastRank);
@@ -50,7 +52,7 @@ const Ranking = (props) => {
       paginate={paginate}
     /> : null;
 
-    const RankList =
+    const RankList = loading===false ?
     <table className="highlight centered responsive-table" >       
       <thead>
         <tr>
@@ -65,22 +67,27 @@ const Ranking = (props) => {
       <tbody>
         <Ranks ranks={currentRanks} loading={loading} />
       </tbody>
-    </table>
+    </table> : null;
+
+  const Card = loading===false ? <div className='card'>
+      <div className="card-content">
+        <div className="card-title">
+          <h2>Ranks -{props.match.params.contestCode} </h2>
+        </div>
+          {RankList}
+          {page}
+          <br/>
+      </div>
+      </div> : <div style={{  position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'}}><Preloader/></div>
   return (
     <div className="wrapper">
       <NavBar/>
       <div className="container">
-          <div className='card'>
-        <div className="card-content">
-          <div className="card-title">
-            <h2>Ranks -{props.match.params.contestCode} </h2>
-          </div>
-            {RankList}
-            {page}
-            <br/>
-        </div>
-        </div>
-    </div>
+        {Card}
+      </div>
     </div>
   );
 };

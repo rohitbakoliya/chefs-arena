@@ -64,11 +64,6 @@ int main() {
                highlightLang : languages.c
           })
      }
-     else if(event.target.value==='javascript'){
-          this.setState({
-               highlightLang : languages.js
-          })
-     }
      else if(event.target.value==='r'){
           this.setState({
                highlightLang : languages.r
@@ -104,11 +99,11 @@ int main() {
           }
           await axios.post("https://api.codechef.com/ide/run", problem_config ,  {headers : {"content-type" : "application/json", "Accept" :"application/json", "Authorization" : `Bearer ${localStorage.getItem('access_token')}`}})
           .then(async(res)=> {
-               console.log(res);
+               // console.log(res);
                let link = res.data.result.data.link;
               await axios.get(`https://api.codechef.com/ide/status?link=${link}` , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
                .then(res=>{
-                    console.log(res);
+                    // console.log(res);
                     const data = res.data.result.data;
                     this.setState({
                          status : data.status,
@@ -148,8 +143,6 @@ int main() {
 
 
   render() {
-     // console.log(this.state)
-
      let op = this.state.loading ? <h5>Submission Queued...</h5> : this.state.status!=='' ?
           <div >
                <h4>OUTPUT</h4>
@@ -204,7 +197,6 @@ int main() {
                                    <option value="PYTH">Python</option>
                                    <option value="go">Go</option>
                                    <option value="r">R</option>
-                                   <option value="javascript">Javascript</option>
                               </select>
                               </div>
                          </div>
@@ -260,8 +252,6 @@ int main() {
                <div ref={el => (this.instance = el)}></div>
          </div>
     ) : null;
-
-     
   }
 }
 export default Run; 

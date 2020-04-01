@@ -26,27 +26,27 @@ export default class NavBar extends Component{
                       </div>
                     </NavLink>
                    </Route>
-                   <a href="" className="sidenav-trigger" data-target="mobile-menu">
+                   <a className="sidenav-trigger" data-target="mobile-menu">
                      <i className="material-icons">menu</i>
                    </a>
                    <ul className="right hide-on-med-and-down">
                      <li><Link to="/user">User</Link></li>
                      <li><Link to="/dashboard">Dashboard</Link></li>
-                     <li><Link to="#">Logout</Link></li>
-                     <li><a href="https://www.instagram.com/codechef/" target="_blank" className="btn-floating btn-small teal darken-2">
+                     <li><Link to="/">Logout</Link></li>
+                     <li><a href="https://www.instagram.com/codechef/" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-instagram"></i>
                      </a></li>
-                     <li><a href="https://www.facebook.com/CodeChef/" target="_blank" className="btn-floating btn-small teal darken-2">
+                     <li><a href="https://www.facebook.com/CodeChef/" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-facebook"></i>
                      </a></li>
-                     <li><a href="https://twitter.com/codechef" target="_blank" className="btn-floating btn-small teal darken-2">
+                     <li><a href="https://twitter.com/codechef" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-twitter"></i>
                      </a></li>
                    </ul>
                    <ul className="sidenav teal lighten-2 center-align" id="mobile-menu">
                      <li><Link to="/user" className="white-text">User</Link></li>
                      <li><Link to="/dashboard" className="white-text">Dashboard</Link></li>
-                     <li><Link to="#" className="white-text">Logout</Link></li>          
+                     <li><Link to="/" className="white-text">Logout</Link></li>          
                    </ul>
                  </div>
                </nav>

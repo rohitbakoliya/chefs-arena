@@ -60,7 +60,6 @@ export default class Timer extends Component {
           } else if (now < this.state.startDate) {
           contestStatus = 'Before start'
           }
-          if(localStorage.getItem('contestStatus'))
           localStorage.setItem('contestStatus' , contestStatus);
 
           var counterView = <div className="center" style={{ marginTop : 10 , paddingTop : 10}}>

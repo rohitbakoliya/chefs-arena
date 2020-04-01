@@ -7,7 +7,7 @@ export default class Error404 extends Component {
                <div className="error-page">
                     <div className="error">404</div>
                     <br /><br />
-                    <span className="info">File not found</span>
+                    <span className="info">Page not found</span>
                </div>
           )
      }

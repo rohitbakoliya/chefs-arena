@@ -1,22 +1,32 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../../navbar/nav';
 import axios from 'axios';
 import {Link ,Redirect} from 'react-router-dom';
-import Timer from '../timer/Timer';
-import Utils from '../Utils/utils';
-
+import Timer from '../../timer/Timer';
+import Utils from '../../Utils/utils';
+import Preloader from '../../Preloader/Preloader'
 export default class ProblemsList extends Component {
 
      state ={
           problems : [],
           loading : true,
           contestProblemsList : [],
+          isParent : false,
+          children : []
      }
      componentDidMount(){
           let path = `https://api.codechef.com/contests/${localStorage.getItem('contestCode')}`;
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
                const data = res.data.result.data.content.problemsList;
+               const content = res.data.result.data.content;
+               console.log(content)
+               if(content.isParent){
+                    this.setState({
+                         isParent : true,
+                         children : content.children
+                    })
+               }
                this.setState({
                     contestProblemsList : data 
                } ,()=> this.makeRequestForEachProblemUtil(data))
@@ -55,10 +65,10 @@ export default class ProblemsList extends Component {
                     this.setState({
                          problems : [...this.state.problems , res.data.result.data.content]
                     } , ()=> localStorage.setItem('problemsList' , JSON.stringify(this.state.problems)));
-                    const data = JSON.stringify(res.data.result.data.content);
+                    // const data = JSON.stringify(res.data.result.data.content);
                }).catch(err=> {
                     try{
-                         if(err.response.status==401){
+                         if(err.response.status===401){
                               Utils.generateAccessToken();
                               alert('Some error occured...please refresh page')
                          }
@@ -73,18 +83,11 @@ export default class ProblemsList extends Component {
                loading : false
           })
      }
-     renderRedirect = () => {
-          if(localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'){
-               return <Redirect to='/dashboard' />
-          }
-          return null;
-     }
      render() {
           const { loading ,contestProblemsList} = this.state;
           const problems =JSON.parse(localStorage.getItem('problemsList')) ;
           const problemsList = (contestProblemsList.length && problems) ?   problems.map(problem=>{
                let obj = contestProblemsList.find(o=> o.problemCode === problem.problemCode);
-               // console.log(obj);
                let accuracy = 0;
                try{
                     accuracy = obj.accuracy;
@@ -112,7 +115,10 @@ export default class ProblemsList extends Component {
 
           let showop;
           if(loading) {
-               showop = <h4 className="center">Loading Problems</h4>
+               showop = <div style={{  position: 'absolute',
+               top: '50%',
+               left: '40%',
+               transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }
           else{
                showop = problemsList ?  <table className="highlight centered responsive-table">
@@ -135,15 +141,28 @@ export default class ProblemsList extends Component {
                <div className="wrapper">
                     <NavBar></NavBar>
                     <div className="container" >
-                         {this.renderRedirect()}
-                         <div className="row"style={{marginTop : 100}} >
+                         {/* {this.renderRedirect()} */}
+                         {this.state.isParent ? 
+                         <div className="children center">
+                              <h6>This contest has subcontests</h6>
+                              {this.state.children.map(child=>{
+                                   return(
+                                        <li key={child}>{child}</li>
+                                   )
+                              })}
+                              <p>Please Participate in them</p>
+                         </div>
+                         :  
+                              <div className="row"style={{marginTop : 100}} >
                               <div className="col l8">
                                   {showop}                                  
                               </div>
                               <div className="col l4 center-align">
                                    <Timer/>
                               </div>
-                         </div>
+                              </div>
+                         }
+                         
                     </div>
                </div>
           )

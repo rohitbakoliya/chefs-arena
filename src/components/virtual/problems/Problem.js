@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../../navbar/nav';
 import convertToHTML from 'markdown-to-html-converter';
 import './Problem.css';
-import Timer from '../timer/Timer';
-import {Redirect} from 'react-router-dom';
+import Timer from '../../timer/Timer';
+import {Redirect, NavLink} from 'react-router-dom';
+import Preloader from '../../Preloader/Preloader'
 
 export default class Problem extends Component {
 
@@ -22,7 +23,7 @@ export default class Problem extends Component {
 
           let problemsList =JSON.parse(localStorage.getItem('problemsList'));
           let content = problemsList.find(problem=>problem.problemCode === problemCode);
-          console.log(content)
+          // console.log(content)
           this.setState({
                loading : false,
                problemCode : content.problemCode,
@@ -43,20 +44,16 @@ export default class Problem extends Component {
                document.getElementById('body').innerHTML = htmlStr; 
           });
      }
-     renderRedirect = () => {
-          if(localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'){
-               return <Redirect to='/dashboard' />
-          }
-          return null;
-     }
-
      render() {
 
-          const {loading , problemCode, problemName , author , dateAdded , sourceSizeLimit , maxTimeLimit ,body} = this.state;
+          const {loading , problemCode, problemName , author , dateAdded , sourceSizeLimit , maxTimeLimit } = this.state;
           let showOutput ;
           let submitLink = `https://www.codechef.com/submit/${problemCode}`;
           if(loading){
-               showOutput = <h4 className="center">Loading...</h4>
+               showOutput = <div style={{  position: 'absolute',
+               top: '50%',
+               left: '50%',
+               transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }else{
               showOutput =  <div className="card-panel">
                               <div className="card-title">
@@ -68,11 +65,11 @@ export default class Problem extends Component {
                                    |  &nbsp; Problem Code : {problemCode}
                                         </div>
                                         <div className="col l4 center">
-                                                  <a style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={'/run/' + problemCode} className="btn waves-effect waves-light submit">
+                                                  <NavLink style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">code</i>
                                                        RUN
-                                                  </a>
-                                                  <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  </NavLink>
+                                                  <a rel="noopener noreferrer" target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">send</i>
                                                        SUBMIT
                                                   </a>
@@ -86,11 +83,11 @@ export default class Problem extends Component {
                                       Problem Code : {problemCode}
                                         </div>
                                         <div style={{marginTop : 10}} className="col l4 s12 center">
-                                             <a style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={'/run/' + problemCode} className="btn waves-effect waves-light submit">
+                                             <NavLink style={{marginRight : 8}} disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                   <i className="material-icons left hide-on-small-only">code</i>
                                                   RUN
-                                             </a>
-                                             <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'} href={submitLink} className="btn waves-effect waves-light">
+                                             </NavLink>
+                                             <a rel="noopener noreferrer" target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'} href={submitLink} className="btn waves-effect waves-light">
                                                   <i className="material-icons left  hide-on-small-only">send</i>
                                                   SUBMIT
                                              </a>
@@ -127,11 +124,11 @@ export default class Problem extends Component {
                                              <div className="divider grey darken-2"></div>
                                              <br/>
                                              <div className="submit-btn center-align">
-                                                  <a style={{marginRight : 20}}  disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  <NavLink style={{marginRight : 20}}  disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  to={'/run/' + problemCode} className="btn waves-effect waves-light submit">
                                                             <i className="material-icons left hide-on-small-only">code</i>
                                                             RUN
-                                                  </a>
-                                                  <a target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
+                                                  </NavLink>
+                                                  <a rel="noopener noreferrer" target="_blank" disabled={localStorage.getItem('contestStatus')==='Contest has ended' || localStorage.getItem('contestStatus')==='Before start'}  href={submitLink} className="btn waves-effect waves-light submit">
                                                        <i className="material-icons left hide-on-small-only">send</i>
                                                        SUBMIT
                                                   </a>
@@ -151,7 +148,6 @@ export default class Problem extends Component {
                <div className="wrapper">
                     <NavBar/>
                     <div className="container">
-                         {this.renderRedirect()}
                          {showOutput}
                     </div>
                </div>

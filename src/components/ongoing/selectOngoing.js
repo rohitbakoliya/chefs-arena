@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {NavLink } from 'react-router-dom';
 import NavBar from '../navbar/nav';
-import '../selectContest/selectVirtual.js';
+import '../virtual/selectContest/selectVirtual.css';
 import Utils from '../Utils/utils';
 import axios from 'axios';
 import ShowAllOngoing from './showAllOngoing';
@@ -51,8 +51,7 @@ export default class SelectOngoing extends Component {
                     }
                     localStorage.setItem('OngoingcontestCode' , obj.code)
                     localStorage.setItem('OngoingcontestDetails' , JSON.stringify(obj));   
-                    // const contestDetails = JSON.parse(localStorage.getItem('contestDetails') ) ;
-               
+                    // console.log(obj);
                }
             });
             
@@ -104,9 +103,9 @@ export default class SelectOngoing extends Component {
                               </div>
                          </div>
                          <div style={{marginTop : 100}}>
-                              <a onClick={this.handleClick} style={{cursor : 'pointer' , textDecoration : 'underline' ,marginTop : 100}}>
+                              <div onClick={this.handleClick} style={{cursor : 'pointer' , textDecoration : 'underline' ,marginTop : 100 , color : 'blue'}}>
                                    {this.state.msg}
-                              </a>
+                              </div>
                               {this.state.toggle ?   <ShowAllOngoing/> : null }
                          </div>
                          

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {NavLink } from 'react-router-dom';
-import '../selectContest/selectVirtual.js';
 import Utils from '../Utils/utils';
 import axios from 'axios';
 
@@ -19,7 +18,7 @@ export default class ShowAllOngoing extends Component {
      contestListRequest  =  (path)=> {
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
-               console.log(res.data.result.data.content.contestList);
+               // console.log(res.data.result.data.content.contestList);
                this.setState({
                     data : res.data.result.data.content.contestList,
                     loading : false

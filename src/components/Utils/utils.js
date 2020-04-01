@@ -1,16 +1,8 @@
 import axios from 'axios';
+import config from './config';
 
 const Utils = {
      getAccessTokenFirstTime : ()=>{
-          let config = {
-               'client_id': '3f7b784f5eeae7151a567c3d974dd6fe',
-               'client_secret' : '6454cc0f0f511117408d87ad85717691',
-               'api_endpoint': 'https://api.codechef.com/',
-               'authorization_code_endpoint': 'https://api.codechef.com/oauth/authorize',
-               'access_token_endpoint': 'https://api.codechef.com/oauth/token',
-               'redirect_uri': 'https://chefs-arena-rohit.netlify.com/dashboard',
-               'website_base_url' : 'https://chefs-arena-rohit.netlify.com/'
-          };
           let oauth_config = {
                "grant_type": "authorization_code",
                "code": localStorage.getItem('authorization_code'),
@@ -20,7 +12,6 @@ const Utils = {
           }
           axios.post(config.access_token_endpoint, oauth_config ,  {headers : {"content-Type" : "application/json"}})
           .then((res)=> {
-               console.log(res.data.result.data);
                localStorage.setItem('access_token' , res.data.result.data.access_token);
                localStorage.setItem('refresh_token' , res.data.result.data.refresh_token);
                localStorage.setItem('scope' , res.data.result.data.scope);
@@ -32,20 +23,11 @@ const Utils = {
           }); 
      },
      generateAccessToken : ()=>{
-          let config = {
-               'client_id': '3f7b784f5eeae7151a567c3d974dd6fe',
-               'client_secret' : '6454cc0f0f511117408d87ad85717691',
-               'api_endpoint': 'https://api.codechef.com/',
-               'authorization_code_endpoint': 'https://api.codechef.com/oauth/authorize',
-               'access_token_endpoint': 'https://api.codechef.com/oauth/token',
-               'redirect_uri': 'https://chefs-arena-rohit.netlify.com/dashboard',
-               'website_base_url' : 'https://chefs-arena-rohit.netlify.com/'
-          };
-          let oauth_details = {
-               'authorization_code' : localStorage.getItem('authorization_code'),
-               'access_token' : localStorage.getItem('access_token'),
-               'refresh_token' : localStorage.getItem('refresh_token')
-          }
+          // let oauth_details = {
+          //      'authorization_code' : localStorage.getItem('authorization_code'),
+          //      'access_token' : localStorage.getItem('access_token'),
+          //      'refresh_token' : localStorage.getItem('refresh_token')
+          // }
           let oauth_config = {
                "grant_type": "refresh_token",
                "refresh_token": localStorage.getItem('refresh_token'),
@@ -54,7 +36,7 @@ const Utils = {
           }
           axios.post(config.access_token_endpoint, oauth_config ,  {headers : {"content-Type" : "application/json"}})
           .then((res)=> {
-               console.log(res , 'YEH WE GOT REFRESH TOKEN');
+               console.log('YEH WE GOT REFRESH TOKEN');
                localStorage.setItem('access_token' , res.data.result.data.access_token);
                localStorage.setItem('refresh_token' , res.data.result.data.refresh_token);
                localStorage.setItem('scope' , res.data.result.data.scope);
@@ -93,7 +75,7 @@ const Utils = {
      practiceProblemRequest : (path)=>{
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
-               console.log(res);
+               // console.log(res);
                // const data = JSON.stringify(res.data.result.data.content.contestList);
                // localStorage.setItem('contestList' , data);
           }).catch(err=> {

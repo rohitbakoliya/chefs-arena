@@ -1,6 +1,6 @@
 
 # Chefs Arena
-
+Codechef Arena Hackathon Project(CodeChef Internship Assessment - Round 2)
 ## Links :
 
 > [Website URL](https://chefs-arena-rohit.netlify.com/) <br/>
@@ -15,6 +15,11 @@
 - `$ npm start`
 -  Change the `website_uri` and `redirect_uri` to http://localhost:3000/ and http://localhost:3000/dashboard  in **src/Utils/config.js and**  and **src/Utils/subConfig.js**
 
+Note: Website Link might be broken because CodeChef API was accessible only in the hackathon
+For More details, contact at api@codechef.com
+
+<br/>
+<br/>
 <br/>
 
 -------------

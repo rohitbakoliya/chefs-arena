@@ -16,6 +16,9 @@
 -  Change the `website_uri` and `redirect_uri` to http://localhost:3000/ and http://localhost:3000/dashboard  in **src/Utils/config.js and**  and **src/Utils/subConfig.js**
 
 -------------
+=============
+
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

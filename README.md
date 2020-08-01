@@ -17,9 +17,8 @@
 
 <br/>
 <br/>
-Note: Website Link might be broken because CodeChef API was accessible only in the hackathon
 <br/>
-For More details, contact at api@codechef.com 
+For More details about CodeChef API, contact at api@codechef.com 
 
 
 <br/>

@@ -1,30 +1,47 @@
 
 # Chefs Arena
-#### Codechef Arena Hackathon Project ( CodeChef Internship Assessment - Round 2 )
-## Links :
 
-> [Website URL](https://chefs-arena-rohit.netlify.com/) <br/>
-> [Presentation URL](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit#slide=id.g829ca34cd3_3_1)<br/>
-> [Youtube Video URL](https://youtu.be/0TGNclKw8Q4) <br/>
+Chef's Arena is a coding platform site similar as other online judges implemented using React application which helps programmers to participate in ongoing CodeChef contests and creating virtual contests. Participants can see their CodeChef profile, ranks, recent submissions of any problem or contest, and also can run the code in IDE. This application uses the CodeChef API to provide the services.
+
+### Quick Links
+
+* [Website](https://chefs-arena-rohit.netlify.com/)
+* [Demo](https://youtu.be/0TGNclKw8Q4)
+
+### Getting more familar
+
+Go to [Complete Guide](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit?usp=sharing)
+
+### Prerequisites
+
+* [NodeJs](https://nodejs.org/en/)
+* [NPM](https://npmjs.org/)
+* Codechef API access (to gain a access, mail at api@codechef.com)
+
+### Technologies used
+
+* [React.Js](https://reactjs.org/)
+* [Materialize CSS](https://materializecss.com/)
+* [Prism.Js](https://prismjs.com/)
+* [Netlify](https://www.netlify.com/) 
 
 
-## Instructions to run it locally  :
-- Clone the repo
-- Install **nodejs - 10.x** along with npm.
-- `$ npm install`
-- `$ npm start`
--  Change the `website_uri` and `redirect_uri` to http://localhost:3000/ and http://localhost:3000/dashboard  in **src/Utils/config.js and**  and **src/Utils/subConfig.js**
+### Installing
 
-<br/>
-<br/>
-<br/>
-For More details about CodeChef API, contact at api@codechef.com 
+* Go to [App and Console](https://developers.codechef.com/apps)
+* Create New App
+* Do following Steps
+```bash
+$ git clone https://github.com/rohitbakoliya/chefs-arena.git
+$ cd chefs-arena
+$ npm install
+$ npm start
+```
+* Navigate to http://localhost:3000/
+* For API Reference - [CodeChef API documentation](https://developers.codechef.com/documentation)
 
+### Authors
+* Rohit Bakoliya - [rohitbakoliya](https://github.com/rohitbakoliya)
 
-<br/>
-
--------------
-
-<br/>
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### License
+This project is licensed under the MIT License - see [LICENSE](https://github.com/rohitbakoliya/chefs-arena/blob/master/LICENSE) for details.

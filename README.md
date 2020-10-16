@@ -10,7 +10,7 @@ Chef's Arena is a coding platform similar to other online judges, implemented us
 
 ### Getting more familar
 
-Go to [Complete Guide](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit?usp=sharing)
+* Go to [Complete Guide](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit?usp=sharing)
 
 ### Prerequisites
 

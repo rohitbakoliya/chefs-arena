@@ -1,7 +1,7 @@
 
 # Chefs Arena
 
-Chef's Arena is a coding platform site similar as other online judges implemented using React application which helps programmers to participate in ongoing CodeChef contests and creating virtual contests. Participants can see their CodeChef profile, ranks, recent submissions of any problem or contest, and also can run the code in IDE. This application uses the CodeChef API to provide the services.
+Chef's Arena is a coding platform similar to other online judges, implemented using React application which helps programmers to participate in ongoing CodeChef contests and creating virtual contests. Participants can see their CodeChef profile, ranks, recent submissions of any problem or contest, and also can run the code in IDE. This application uses the CodeChef API to provide the services.
 
 ### Quick Links
 

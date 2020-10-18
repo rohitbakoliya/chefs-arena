@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import { NavLink ,Route } from 'react-router-dom';
+import { NavLink ,Redirect,Route } from 'react-router-dom';
 import Logo from '../../../assets/cc_logo.png'
 import './nav.css';
 export default class NavBar extends Component{
@@ -12,12 +12,17 @@ export default class NavBar extends Component{
       });`;
     this.instance.appendChild(script);
   }
+  state={logout: false};
+
   handleLogout = (e)=>{
-    localStorage.clear();
+    if(window.confirm("Do you want to logout?")){
+      this.setState({logout: true});
+      localStorage.clear();
+    }
   }
 
-     render(){
-          return(
+     render(){ 
+       return(
               <header>
                <nav className="nav-wrapper teal">
                  <div className="container">
@@ -36,11 +41,14 @@ export default class NavBar extends Component{
                      <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
                      <li><NavLink to="/user" activeClassName="active">User</NavLink></li>
                      <li><NavLink to="/IDE" activeClassName="active">IDE</NavLink></li>
-                     <li><NavLink to="/" exact activeClassName="active">Logout</NavLink></li>
-
+                     {
+                      this.state.logout ? <Redirect to='/' /> : 
+                      <li onClick={this.handleLogout} style={{cursor: 'pointer'}} >Logout</li>          
+                    } 
                      <li><a href="https://github.com/rohitbakoliya" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-github"></i>
                      </a></li>
+
                      <li><a href="https://www.facebook.com/rohit.bakoliya.75/" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-facebook"></i>
                      </a></li>
@@ -52,8 +60,12 @@ export default class NavBar extends Component{
                      <li><NavLink to="/dashboard" className="white-text" activeClassName="activeMob">Dashboard</NavLink></li>
                      <li><NavLink to="/user" className="white-text" activeClassName="activeMob">User</NavLink></li>
                      <li><NavLink to="/IDE" className="white-text" activeClassName="activeMob">IDE</NavLink></li>
-                     <li><NavLink to="/" exact className="white-text" activeClassName="activeMob" onClick={this.handleLogout}>Logout</NavLink></li>          
-                   </ul>
+                   
+                    {
+                      this.state.logout ? <Redirect to='/' /> : 
+                      <li onClick={this.handleLogout} className="white-text" style={{cursor: 'pointer'}}>Logout</li>          
+                    } 
+                    </ul>
                  </div>
                </nav>
                <div ref={el => (this.instance = el)}></div>

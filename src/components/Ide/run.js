@@ -254,13 +254,13 @@ int main() {
               </div>
             </div>
             <div className="col l3">
-              <a
+              <div
                 onClick={this.handleRun}
                 className="btn waves-effect waves-light submit modal-trigger"
               >
                 <i className="material-icons left hide-on-small-only">code</i>
                 RUN
-              </a>
+              </div>
             </div>
           </div>
           <div>

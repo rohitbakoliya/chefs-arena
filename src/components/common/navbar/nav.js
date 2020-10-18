@@ -17,7 +17,9 @@ export default class NavBar extends Component{
   handleLogout = (e)=>{
     if(window.confirm("Do you want to logout?")){
       this.setState({logout: true});
-      localStorage.clear();
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('authorization_code');
+      localStorage.removeItem('refresh_token');
     }
   }
 
@@ -30,7 +32,7 @@ export default class NavBar extends Component{
                     <NavLink to="/dashboard" className="brand-logo">
                       <div className="valign-wrapper">
                           <img src={Logo} alt="logo" className="responsive-img codechef-logo hide-on-small-only" />
-                          <h5>Chef's Arena</h5>
+                          <span style={{fontSize: '1.64rem'}}>Chef's Arena</span>
                       </div>
                     </NavLink>
                    </Route>
@@ -38,12 +40,12 @@ export default class NavBar extends Component{
                      <i className="material-icons">menu</i>
                    </a>
                    <ul className="right hide-on-med-and-down">
-                     <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
-                     <li><NavLink to="/user" activeClassName="active">User</NavLink></li>
-                     <li><NavLink to="/IDE" activeClassName="active">IDE</NavLink></li>
+                     <li><NavLink to="/dashboard" activeClassName="active">Dashboard </NavLink></li>
+                     <li><NavLink to="/user" activeClassName="active"> User </NavLink></li>
+                     <li><NavLink to="/IDE" activeClassName="active"> IDE </NavLink></li>
                      {
                       this.state.logout ? <Redirect to='/' /> : 
-                      <li onClick={this.handleLogout} style={{cursor: 'pointer'}} >Logout</li>          
+                      <li onClick={this.handleLogout} style={{cursor: 'pointer'}} > Logout </li>          
                     } 
                      <li><a href="https://github.com/rohitbakoliya" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-github"></i>
@@ -52,7 +54,7 @@ export default class NavBar extends Component{
                      <li><a href="https://www.facebook.com/rohit.bakoliya.75/" rel="noopener noreferrer" target="_blank" className="btn-floating btn-small teal darken-2">
                        <i className="fab fa-facebook"></i>
                      </a></li>
-                     <li><a href="mailto:bakoliyarohit00@gmail.com" target="_blank" className="btn-floating btn-small teal darken-2">
+                     <li><a href="mailto:bakoliyarohit00@gmail.com" className="btn-floating btn-small teal darken-2">
                       <i className="material-icons">mail</i>
                      </a></li>
                    </ul>
@@ -60,7 +62,6 @@ export default class NavBar extends Component{
                      <li><NavLink to="/dashboard" className="white-text" activeClassName="activeMob">Dashboard</NavLink></li>
                      <li><NavLink to="/user" className="white-text" activeClassName="activeMob">User</NavLink></li>
                      <li><NavLink to="/IDE" className="white-text" activeClassName="activeMob">IDE</NavLink></li>
-                   
                     {
                       this.state.logout ? <Redirect to='/' /> : 
                       <li onClick={this.handleLogout} className="white-text" style={{cursor: 'pointer'}}>Logout</li>          

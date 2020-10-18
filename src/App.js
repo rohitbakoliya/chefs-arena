@@ -16,6 +16,8 @@ import Error404 from './components/common/404/Error404';
 import ProtectedRoute from './routes/protectedRoute';
 import Auth from './components/auth/auth';
 
+import './App.css';
+
 class App extends Component{
   render(){
     return (

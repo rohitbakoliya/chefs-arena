@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NavBar from '../../common/navbar/nav';
 import '../../ongoing/ProblemDiscription.css';
 import MarkdownRender from '../../markdown/markdownRender'
-import Timer from '../../timer/Timer';
+import Timer from '../timer/Timer';
 import { NavLink} from 'react-router-dom';
 import Preloader from '../../common/Preloader/Preloader'
 
@@ -59,7 +59,7 @@ export default class Problem extends Component {
                               <div className="card-title">
                                    <div className="row valign-wrapper hide-on-small-only">
                                         <div className="col l4 left">
-                                             <h5 style={{fontWeight :'500'}}>{problemName}</h5>
+                                             <h2 style={{fontWeight :'500'}}>{problemName}</h2>
                                         </div>
                                         <div style={{fontWeight :'600'}} className="col l4 ">
                                    |  &nbsp; Problem Code : {problemCode}

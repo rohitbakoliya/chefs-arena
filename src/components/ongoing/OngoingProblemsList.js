@@ -89,21 +89,25 @@ export default class OngoingProblemsList extends Component {
           }
           else{
                showop = problemsList ?<div className="contest">  
-                         <h4>{localStorage.getItem('OngoingcontestCode')}</h4> 
-                         <table className="highlight centered responsive-table">
-                                   <thead>
-                                        <tr>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Sucessful Submissions</th>
-                                        <th>Accuracy</th>
-                                        {/* you can add submit button also */}
-                                        </tr>
-                                   </thead>
-                                   <tbody>
-                                        {problemsList}
-                                   </tbody>
-                         </table>
+                         <div className="card">
+                              <div className="card-content">
+                                   <strong className="card-title" style={{fontWeight: 'bold', fontSize: '20px'}}>Problems</strong>
+                                   <table className="highlight centered responsive-table">
+                                             <thead>
+                                                  <tr>
+                                                  <th>Name</th>
+                                                  <th>Code</th>
+                                                  <th>Sucessful Submissions</th>
+                                                  <th>Accuracy</th>
+                                                  {/* you can add submit button also */}
+                                                  </tr>
+                                             </thead>
+                                             <tbody>
+                                                  {problemsList}
+                                             </tbody>
+                                   </table>
+                              </div>
+                         </div>
                     </div>
                     : null
           }
@@ -112,11 +116,17 @@ export default class OngoingProblemsList extends Component {
                     <NavBar></NavBar>
                     <div className="container" >
                          {this.state.noProblem ? <div className="center"><h4 >Contest dosn't have any problems</h4> <p>*It might happens when contest has any subcontest</p></div> :
-                         <div className="row">
+                         <div className="row" style={{marginTop : 20}}>
                               <div className="col l8">
                                   {showop}                                  
                               </div>
-                              <div className="col l4 center-align" style={{marginTop : 100}}>
+                              <div className="col l4 center-align" >
+                              <div className="card">
+                                   <div className="card-title" style={{padding: '20px'}}>
+                                        <strong>Contest Code : {localStorage.getItem('OngoingcontestCode')}</strong> 
+                                   </div>
+                              </div>
+
                                    <OngoingTimer/>
                                    <div className="card">
                                         <div className="card-content">

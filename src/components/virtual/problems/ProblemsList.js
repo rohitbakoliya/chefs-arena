@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from '../../common/navbar/nav';
 import axios from 'axios';
-import {Link ,Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Timer from '../../timer/Timer';
 import Utils from '../../utils/utils';
 import Preloader from '../../common/Preloader/Preloader'
@@ -121,27 +121,33 @@ export default class ProblemsList extends Component {
                transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }
           else{
-               showop = problemsList ?  <table className="highlight centered responsive-table">
-                                   <thead>
-                                        <tr>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Sucessful Submissions</th>
-                                        <th>Accuracy</th>
-                                        {/* you can add submit button also */}
-                                        </tr>
-                                   </thead>
-                                   <tbody>
-                                        {problemsList}
-                                   </tbody>
-                         </table>
-                         : null
+               showop = problemsList ?<div className="contest">  
+                         <div className="card">
+                              <div className="card-content">
+                                   <strong className="card-title" style={{fontWeight: 'bold', fontSize: '20px'}}>Problems</strong>
+                                   <table className="highlight centered responsive-table">
+                                             <thead>
+                                                  <tr>
+                                                  <th>Name</th>
+                                                  <th>Code</th>
+                                                  <th>Sucessful Submissions</th>
+                                                  <th>Accuracy</th>
+                                                  {/* you can add submit button also */}
+                                                  </tr>
+                                             </thead>
+                                             <tbody>
+                                                  {problemsList}
+                                             </tbody>
+                                   </table>
+                              </div>
+                         </div>
+                    </div>
+                    : null
           }
           return (
                <div className="wrapper">
-                    <NavBar></NavBar>
+                    <NavBar/>
                     <div className="container" >
-                         {/* {this.renderRedirect()} */}
                          {this.state.isParent ? 
                          <div className="children center">
                               <h6>This contest has subcontests</h6>
@@ -153,11 +159,16 @@ export default class ProblemsList extends Component {
                               <p>Please Participate in them</p>
                          </div>
                          :  
-                              <div className="row"style={{marginTop : 100}} >
+                              <div className="row" style={{marginTop : 20}} >
                               <div className="col l8">
                                   {showop}                                  
                               </div>
                               <div className="col l4 center-align">
+                              <div className="card">
+                                   <div className="card-title" style={{padding: '20px'}}>
+                                        <strong>Contest Code : {localStorage.getItem('contestCode')}</strong> 
+                                   </div>
+                              </div>
                                    <Timer/>
                               </div>
                               </div>

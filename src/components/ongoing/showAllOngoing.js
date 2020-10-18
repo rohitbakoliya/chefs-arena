@@ -34,7 +34,7 @@ export default class ShowAllOngoing extends Component {
           }) : null;
           let showop = list ? <div className="card">
                <div className="card-content">
-                    <div className="card-title"><h4 className="center">Onging Contests</h4> </div>
+                    <div className="card-title"><h3 style={{margin: 2, fontWeight: 'normal'}} className="center">Onging Contests</h3> </div>
                     <table className="highlight centered responsive-table">
                                    <thead>
                                         <tr>

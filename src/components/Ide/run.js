@@ -168,10 +168,10 @@ int main() {
   };
   render() {
     let op = this.state.loading ? (
-      <h5>Submission Queued...</h5>
+      <h3 style={{fontWeight: 'normal'}}>Submission Queued...</h3>
     ) : this.state.status !== "" ? (
       <div>
-        <h5>OUTPUT</h5>
+        <h2 style={{margin: '10px', fontWeight: 'normal'}}>OUTPUT</h2>
         <div className="row">
           <div className="col l3">
             <strong>Status:</strong> {this.state.status}

@@ -115,7 +115,7 @@ export default class OngoingProblemsList extends Component {
                <div className="wrapper">
                     <NavBar></NavBar>
                     <div className="container" >
-                         {this.state.noProblem ? <div className="center"><h4 >Contest dosn't have any problems</h4> <p>*It might happens when contest has any subcontest</p></div> :
+                         {this.state.noProblem ? <div className="center"><h4 >Contest dosn't have any problems* or it's private</h4> <p>-Sometimes this might happens when contest has any subcontest</p></div> :
                          <div className="row" style={{marginTop : 20}}>
                               <div className="col l8">
                                   {showop}                                  

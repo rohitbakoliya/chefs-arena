@@ -23,7 +23,7 @@ export default class Root extends Component{
                <div className="wrapper">
                     <div className="root-container">
                          <div className="center">
-                              <h4 className="center-align">Chef's Arena</h4>
+                              <h1 className="center-align" style={{fontWeight: 'normal', margin: 10}}>Chef's Arena</h1>
                               <img src={Logo} alt="Codechef logo" className="responsive-img codechef-logo"/>
                               <div className="center input-field">
                                    <a href={'https://api.codechef.com/oauth/authorize?response_type=code&client_id=' + config.client_id+ '&state=xyz&redirect_uri=' + config.redirect_uri}  className="btn waves-effect waves-light">Enter</a>

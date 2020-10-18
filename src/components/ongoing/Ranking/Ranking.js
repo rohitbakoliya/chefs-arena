@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Ranks from './Ranks';
 import Pagination from './Pagination';
 import axios from 'axios';
-import Utils from '../../Utils/utils'
-import NavBar from '../../navbar/nav';
-import Preloader from '../../Preloader/Preloader';
+import Utils from '../../utils/utils'
+import NavBar from '../../common/navbar/nav';
+import Preloader from '../../common/Preloader/Preloader';
 
 const Ranking = (props) => {
   const [ranks, setRanks] = useState([]);

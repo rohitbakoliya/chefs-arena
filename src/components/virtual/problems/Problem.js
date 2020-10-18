@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import NavBar from '../../navbar/nav';
-import convertToHTML from 'markdown-to-html-converter';
-import './Problem.css';
+import NavBar from '../../common/navbar/nav';
+import '../../ongoing/ProblemDiscription.css';
+import MarkdownRender from '../../markdown/markdownRender'
 import Timer from '../../timer/Timer';
-import {Redirect, NavLink} from 'react-router-dom';
-import Preloader from '../../Preloader/Preloader'
+import { NavLink} from 'react-router-dom';
+import Preloader from '../../common/Preloader/Preloader'
 
 export default class Problem extends Component {
 
@@ -34,14 +34,7 @@ export default class Problem extends Component {
                maxTimeLimit : content.maxTimeLimit,
                body : content.body,
           } , ()=>{
-               
-               let body = this.state.body;
-               body = body.replace(/<br ?\/?>/g, "\n");
-               // TODO : use mathjax instead of this
-               body = body.replace(/\\le/g , "&lt;");
-               const markdownStr = body;
-               const htmlStr = convertToHTML(markdownStr);
-               document.getElementById('body').innerHTML = htmlStr; 
+               this.setState({loading: false});
           });
      }
      render() {
@@ -55,6 +48,13 @@ export default class Problem extends Component {
                left: '50%',
                transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }else{
+               var data = this.state.body;
+               data = data.replace(/`/g, "");
+               data = data.replace(/###/g, "\n### ");
+               data = data.replace(/<br ?\/?>/g, "\n");
+               let renderProblemStatement = (
+                    <MarkdownRender source={data} />
+               );
               showOutput =  <div className="card-panel">
                               <div className="card-title">
                                    <div className="row valign-wrapper hide-on-small-only">
@@ -98,8 +98,10 @@ export default class Problem extends Component {
                               <br/>
                               <div className="card-content">
                                    <div className="row">
-                                        <div className="col l8 m8 s12 sub-container">
-                                             <div id="body" className="browser-default"></div>
+                                        <div className="col l8 m8 s12" style={{boxShadow:  '6px 0 2px -3px rgba(0,0,0,0.12)'}}>
+                                             <div className="problemDescription">
+                                                  {renderProblemStatement}
+                                             </div>
                                              <table className="responsive-table striped grey lighten-3 centered">
                                                   <tbody>
                                                        <tr>

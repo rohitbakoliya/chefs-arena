@@ -11,7 +11,6 @@ export default class OngoingTimer extends Component {
           seconds: '00',
      }
      componentDidMount(){
-
           let obj =JSON.parse(localStorage.getItem('OngoingcontestDetails')); 
           let startDate = new Date(obj.startDate).getTime();
           let endDate = new Date(obj.endDate).getTime(); 

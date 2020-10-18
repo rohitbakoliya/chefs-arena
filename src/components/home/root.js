@@ -1,7 +1,7 @@
 import React , {Component} from 'react';
 import Logo from '../../assets/cc_logo.png';
 import './root.css';
-import subConfig from '../Utils/subConfig';
+import config from '../utils/config';
 
 export default class Root extends Component{
      
@@ -26,7 +26,7 @@ export default class Root extends Component{
                               <h4 className="center-align">Chef's Arena</h4>
                               <img src={Logo} alt="Codechef logo" className="responsive-img codechef-logo"/>
                               <div className="center input-field">
-                                   <a href={'https://api.codechef.com/oauth/authorize?response_type=code&client_id=' + subConfig.client_id+ '&state=xyz&redirect_uri=' + subConfig.redirect_uri}  className="btn waves-effect waves-light">Enter</a>
+                                   <a href={'https://api.codechef.com/oauth/authorize?response_type=code&client_id=' + config.client_id+ '&state=xyz&redirect_uri=' + config.redirect_uri}  className="btn waves-effect waves-light">Enter</a>
                               </div>
                          </div>
                     </div>     

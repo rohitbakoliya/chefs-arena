@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
-import convertToHTML from 'markdown-to-html-converter';
-import '../virtual/problems/Problem.css';
+import NavBar from '../common/navbar/nav';
 import OngoingTimer from './OngoingTimer';
 import { NavLink} from 'react-router-dom';
 import axios from 'axios'
-import Utils from '../Utils/utils'
+import Utils from '../utils/utils'
+import MarkdownRender from '../markdown/markdownRender'
 import SuccessfulSubmissions from './SuccessfulSubmissions/SuccessfulSubmissions';
-import Preloader from '../Preloader/Preloader';
-
+import Preloader from '../common/Preloader/Preloader';
+import './ProblemDiscription.css';
 
 export default class OngoingProblem extends Component {
 
@@ -43,28 +42,6 @@ export default class OngoingProblem extends Component {
                          body : content.body,
                          contestCode : contestCode
                     } , ()=>{
-                         
-                         var body = this.state.body;
-                         var tempbody = body;
-                         var err = false
-                         try{
-                              tempbody = tempbody.replace(/<br ?\/?>/g, "\n");
-                         }catch(e){
-                              err = true;
-                         }
-                         if(!err){
-                              body = tempbody;
-                         }
-                         body = body.replace(/\\le/g , "&lt;");
-                         const markdownStr = body;
-                         try{
-                              const htmlStr = convertToHTML(markdownStr);
-                              document.getElementById('body').innerHTML = htmlStr;
-                         } catch(err){
-                              const errLog = '<code className="center-align">OOps! Some Error occured While converting Markdown</code>'
-                              document.getElementById('body').innerHTML = errLog;
-                         }
-                         
                          this.setState({
                               loading : false
                          }) 
@@ -98,6 +75,14 @@ export default class OngoingProblem extends Component {
                left: '50%',
                transform: 'translate(-50%, -50%)'}}><Preloader/></div> 
           }else{
+               var data = this.state.body;
+               data = data.replace(/`/g, "");
+               data = data.replace(/###/g, "\n### ");
+               data = data.replace(/<br ?\/?>/g, "\n");
+               let renderProblemStatement = (
+                    <MarkdownRender source={data} />
+               );
+               
               showOutput =  <div className="card-panel">
                               <div className="card-title">
                                    <div className="row valign-wrapper hide-on-small-only">
@@ -142,7 +127,9 @@ export default class OngoingProblem extends Component {
                               <div className="card-content">
                                    <div className="row">
                                         <div className="col l8 m12 s12 sub-container">
-                                             <div id="body" className="browser-default"></div>
+                                             <div className="problemDescription browser-default">
+                                             { renderProblemStatement }
+                                             </div>
                                              <table className="responsive-table striped grey lighten-3 centered">
                                                   <tbody>
                                                        <tr>

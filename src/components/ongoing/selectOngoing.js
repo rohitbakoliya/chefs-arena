@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {NavLink } from 'react-router-dom';
-import NavBar from '../navbar/nav';
+import NavBar from '../common/navbar/nav';
 import '../virtual/selectContest/selectVirtual.css';
-import Utils from '../Utils/utils';
+import Utils from '../utils/utils';
 import axios from 'axios';
 import ShowAllOngoing from './showAllOngoing';
 
@@ -21,17 +21,18 @@ export default class SelectOngoing extends Component {
           })
      }
      componentDidMount(){
+          localStorage.removeItem('OngoingcontestCode');
           (async () => {
                let path = 'https://api.codechef.com/contests?status=present';
                this.contestListRequest(path)
           })();
      }
-     injectScript(){
+     injectScript(data){
           const script = document.createElement("script");
           script.async = true;
           script.innerHTML = `
-          $(document).ready(async function(){
-            const data = await JSON.parse(localStorage.getItem('allOngoing'));
+          $(document).ready(()=>{
+            const data = ${data};
             let dataForAutocomplete = {};
             data.forEach(contest => {
                  dataForAutocomplete[contest.code] = null;
@@ -39,10 +40,9 @@ export default class SelectOngoing extends Component {
             });
             $('input.autocomplete').autocomplete({
               data: dataForAutocomplete,
-               onAutocomplete : function(val){
+               onAutocomplete : (val)=>{
                     let objName = data.find(o => o.name === val);
                     let objCode = data.find(o => o.code === val);
-                    // console.log(objName ,objCode );
                     let obj = {};
                     if(objName===undefined){
                          obj = objCode;
@@ -50,25 +50,23 @@ export default class SelectOngoing extends Component {
                          obj = objName;
                     }
                     localStorage.setItem('OngoingcontestCode' , obj.code)
-                    localStorage.setItem('OngoingcontestDetails' , JSON.stringify(obj));   
-                    // console.log(obj);
+                    localStorage.setItem('OngoingcontestDetails' , JSON.stringify(obj));  
                }
             });
             
           });
              `
           this.instance.appendChild(script);
+          this.forceUpdate();
      }
      contestListRequest  =  (path)=> {
           axios.get( path , {headers : {"content-Type" : "application/json" ,"Authorization" : `Bearer ${localStorage.getItem('access_token')}` }})
           .then(res=>{
-               // console.log(res.data.result.data.content.contestList);
                const data = JSON.stringify(res.data.result.data.content.contestList);
-               localStorage.setItem('allOngoing' , data);
                this.setState({
-                    data : res.data.result.data.content.contestList,
-                    loading : false
-               } , ()=> this.injectScript())
+                    loading : false,
+                    data: res.data.result.data.content.contestList
+               } , ()=> this.injectScript(data))
           }).catch(err=> {
                try{
                     if(err.response.status===401){
@@ -97,7 +95,7 @@ export default class SelectOngoing extends Component {
                                              <label htmlFor="autocomplete-input" className="hide-on-small-only" >Contest Name or Contest Code</label>
                                         </div>
                                         <div className="input-field col s4 center">        
-                                             <NavLink to='/contests/problems'  name="Submit" id="submit-btn"  className="btn waves-effect waves-light">Register</NavLink>     
+                                             <NavLink to={'/contests/problems'}  name="Submit" id="submit-btn"  className="btn waves-effect waves-light">Register</NavLink>     
                                         </div>
                                    </div>
                               </div>
@@ -106,7 +104,11 @@ export default class SelectOngoing extends Component {
                               <div onClick={this.handleClick} style={{cursor : 'pointer' , textDecoration : 'underline' ,marginTop : 100 , color : 'blue'}}>
                                    {this.state.msg}
                               </div>
-                              {this.state.toggle ?   <ShowAllOngoing/> : null }
+                              { !this.state.loading? 
+                                  ( this.state.toggle ?   
+                                   <ShowAllOngoing
+                                        data = {this.state.data}
+                                   /> : null ): 'Loading...'}
                          </div>
                          
                     </div>

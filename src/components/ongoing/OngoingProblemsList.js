@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../common/navbar/nav';
 import axios from 'axios';
 import {Link, NavLink } from 'react-router-dom';
-import Utils from '../Utils/utils';
+import Utils from '../utils/utils';
 import OngoingTimer from './OngoingTimer';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 
 import RecentSubmissions from './RecentSubmissions/RecentSubmissions'
 export default class OngoingProblemsList extends Component {
@@ -62,10 +62,10 @@ export default class OngoingProblemsList extends Component {
                     return(
                          <tr key={problem.problemCode} >
                               <td >
-                                   <Link to={`${problem.contestCode}/problems/${problem.problemCode}`}>{problem.problemName ? problem.problemName : problem.problemCode}</Link>
+                                   <Link to={'/contests/'+problem.contestCode + '/problems/'+ problem.problemCode}>{problem.problemName ? problem.problemName : problem.problemCode}</Link>
                               </td>
                               <td >
-                                   <Link to={`${problem.contestCode}/problems/${problem.problemCode}`}>{problem.problemCode}</Link>
+                                   <Link to={'/contests/'+problem.contestCode + '/problems/'+ problem.problemCode}>{problem.problemCode}</Link>
                               </td>
                               <td>
                                    {problem.successfulSubmissions}
@@ -111,7 +111,7 @@ export default class OngoingProblemsList extends Component {
                <div className="wrapper">
                     <NavBar></NavBar>
                     <div className="container" >
-                         {this.state.noProblem ? <div className="center"><h4 >Oops!!! Contest doesn't has any problem</h4> <p>*It might happens when contest has any subcontest</p></div> :
+                         {this.state.noProblem ? <div className="center"><h4 >Contest dosn't have any problems</h4> <p>*It might happens when contest has any subcontest</p></div> :
                          <div className="row">
                               <div className="col l8">
                                   {showop}                                  

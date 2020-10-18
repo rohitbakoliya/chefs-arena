@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from './config';
 
 const Utils = {
-     getAccessTokenFirstTime : ()=>{
+     getAccessTokenFirstTime : async ()=>{
           let oauth_config = {
                "grant_type": "authorization_code",
                "code": localStorage.getItem('authorization_code'),
@@ -22,7 +22,7 @@ const Utils = {
                alert('some error occurred try to login again')
           }); 
      },
-     generateAccessToken : ()=>{
+     generateAccessToken : async ()=>{
           // let oauth_details = {
           //      'authorization_code' : localStorage.getItem('authorization_code'),
           //      'access_token' : localStorage.getItem('access_token'),

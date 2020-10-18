@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Utils from '../../Utils/utils'
+import Utils from '../../utils/utils'
 
 const SuccessfulSubmissions = ({problemCode , contestCode}) => {
   const [results, setResults] = useState([]);

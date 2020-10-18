@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {NavLink } from 'react-router-dom';
-import NavBar from '../../navbar/nav';
+import NavBar from '../../common/navbar/nav';
 import './selectVirtual.css';
-import Utils from '../../Utils/utils';
+import Utils from '../../utils/utils';
 
 export default class SelectVirtual extends Component {
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../common/navbar/nav';
 import axios from 'axios';
-import Utils from '../Utils/utils';
-import Preloader from '../Preloader/Preloader'
+import Utils from '../utils/utils';
+import Preloader from '../common/Preloader/Preloader'
 export default class User extends Component {
      state = {
           username : '',

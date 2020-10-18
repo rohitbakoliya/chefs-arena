@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../common/navbar/nav';
 import axios from 'axios';
-import Utils from '../Utils/utils';
-import Preloader from '../Preloader/Preloader'
+import Utils from '../utils/utils';
+import Preloader from '../common/Preloader/Preloader'
 export default class User extends Component {
      state = {
           username : '',
@@ -197,17 +197,17 @@ export default class User extends Component {
                               </table>
                          </div>
                          <div className="divider grey darken-1"></div>
-                         <h5>Submissions</h5>
+                         <h3>Submissions</h3>
                          <div id="chart_div" style={{width : 600 , height : 600 }}></div>
                          <br/>
                          <div className="divider grey darken-2"></div>
-                         <h5>Problem Solved</h5>
-                         <strong><h6>Fully Solved</h6></strong>
+                         <h3>Problem Solved</h3>
+                         <strong><h4>Fully Solved</h4></strong>
                          {fullySolved}
                          <br/>
                          <div className="divider grey darken-2"></div>
                     
-                         <strong><h6>Partially Solved</h6></strong>
+                         <strong><h4>Partially Solved</h4></strong>
                          {partially}
                     </div>
                </div>
@@ -223,7 +223,7 @@ export default class User extends Component {
       var ratingCard = countryRanking ?  <div className="card">
                <div className="card-content center">
                     <div className="card-title">
-                         <strong><h3>{rating}</h3></strong>
+                         <h2 style={{margin: 2}}>{rating}</h2>
                         <p><strong> Codechef Rating</strong></p> 
                         <div className={colour}>{starsList}</div> 
                     </div>

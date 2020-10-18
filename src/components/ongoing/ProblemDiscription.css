@@ -1,0 +1,59 @@
+.problemDescription {
+  padding: 1rem;
+  line-height: 1.5;
+}
+.problemDescription h1{
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;	
+}
+.problemDescription h2{
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+.problemDescription h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+.problemDescription h4 {
+  display: block;
+  margin-top: 1.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+.problemDescription h5, h6{
+    display: block;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+.problemDescription ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+}
+.problemDescription li{
+    display: list-item;
+    color: black;
+    list-style-type: disc !important;
+}

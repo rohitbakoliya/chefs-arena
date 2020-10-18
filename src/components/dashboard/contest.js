@@ -11,9 +11,9 @@ export default class Contest extends Component{
                          <div className="col s12 l6 column">
                               <div className="card-panel middle-panel">
                                    <div className="card-content center-align">
-                                        <h5 className="card-title">
+                                        <h3 className="card-title">
                                              Participate in ongoing contests
-                                        </h5>
+                                        </h3>
                                         <div className="divider"></div> 
                                         <p>
                                              Here you can Participate in ongoing challanges (if there any)  
@@ -28,9 +28,9 @@ export default class Contest extends Component{
                          <div className="col s12 l6 column">
                               <div className="card-panel">
                                    <div className="card-content center-align">
-                                        <h5 className="card-title">
+                                        <h3 className="card-title">
                                              Create Virtual Contest
-                                        </h5>
+                                        </h3>
                                         <div className="divider"></div> 
                                         <p>
                                              Participate in the Past contests against a clock! (Only Lunch time and Cookoff supported)

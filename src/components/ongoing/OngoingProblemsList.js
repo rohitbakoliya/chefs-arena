@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import NavBar from '../navbar/nav';
+import NavBar from '../common/navbar/nav';
 import axios from 'axios';
 import {Link, NavLink } from 'react-router-dom';
-import Utils from '../Utils/utils';
+import Utils from '../utils/utils';
 import OngoingTimer from './OngoingTimer';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 
 import RecentSubmissions from './RecentSubmissions/RecentSubmissions'
 export default class OngoingProblemsList extends Component {
@@ -62,10 +62,10 @@ export default class OngoingProblemsList extends Component {
                     return(
                          <tr key={problem.problemCode} >
                               <td >
-                                   <Link to={`${problem.contestCode}/problems/${problem.problemCode}`}>{problem.problemName ? problem.problemName : problem.problemCode}</Link>
+                                   <Link to={'/contests/'+problem.contestCode + '/problems/'+ problem.problemCode}>{problem.problemName ? problem.problemName : problem.problemCode}</Link>
                               </td>
                               <td >
-                                   <Link to={`${problem.contestCode}/problems/${problem.problemCode}`}>{problem.problemCode}</Link>
+                                   <Link to={'/contests/'+problem.contestCode + '/problems/'+ problem.problemCode}>{problem.problemCode}</Link>
                               </td>
                               <td>
                                    {problem.successfulSubmissions}
@@ -89,21 +89,25 @@ export default class OngoingProblemsList extends Component {
           }
           else{
                showop = problemsList ?<div className="contest">  
-                         <h4>{localStorage.getItem('OngoingcontestCode')}</h4> 
-                         <table className="highlight centered responsive-table">
-                                   <thead>
-                                        <tr>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Sucessful Submissions</th>
-                                        <th>Accuracy</th>
-                                        {/* you can add submit button also */}
-                                        </tr>
-                                   </thead>
-                                   <tbody>
-                                        {problemsList}
-                                   </tbody>
-                         </table>
+                         <div className="card">
+                              <div className="card-content">
+                                   <strong className="card-title" style={{fontWeight: 'bold', fontSize: '20px'}}>Problems</strong>
+                                   <table className="highlight centered responsive-table">
+                                             <thead>
+                                                  <tr>
+                                                  <th>Name</th>
+                                                  <th>Code</th>
+                                                  <th>Sucessful Submissions</th>
+                                                  <th>Accuracy</th>
+                                                  {/* you can add submit button also */}
+                                                  </tr>
+                                             </thead>
+                                             <tbody>
+                                                  {problemsList}
+                                             </tbody>
+                                   </table>
+                              </div>
+                         </div>
                     </div>
                     : null
           }
@@ -111,12 +115,18 @@ export default class OngoingProblemsList extends Component {
                <div className="wrapper">
                     <NavBar></NavBar>
                     <div className="container" >
-                         {this.state.noProblem ? <div className="center"><h4 >Oops!!! Contest doesn't has any problem</h4> <p>*It might happens when contest has any subcontest</p></div> :
-                         <div className="row">
+                         {this.state.noProblem ? <div className="center"><h4 >Contest dosn't have any problems* or it's private</h4> <p>-Sometimes this might happens when contest has any subcontest</p></div> :
+                         <div className="row" style={{marginTop : 20}}>
                               <div className="col l8">
                                   {showop}                                  
                               </div>
-                              <div className="col l4 center-align" style={{marginTop : 100}}>
+                              <div className="col l4 center-align" >
+                              <div className="card">
+                                   <div className="card-title" style={{padding: '20px'}}>
+                                        <strong>Contest Code : {localStorage.getItem('OngoingcontestCode')}</strong> 
+                                   </div>
+                              </div>
+
                                    <OngoingTimer/>
                                    <div className="card">
                                         <div className="card-content">

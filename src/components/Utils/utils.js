@@ -36,7 +36,7 @@ const Utils = {
           }
           axios.post(config.access_token_endpoint, oauth_config ,  {headers : {"content-Type" : "application/json"}})
           .then((res)=> {
-               console.log('YEH WE GOT REFRESH TOKEN');
+               console.log('New REFRESH TOKEN');
                localStorage.setItem('access_token' , res.data.result.data.access_token);
                localStorage.setItem('refresh_token' , res.data.result.data.refresh_token);
                localStorage.setItem('scope' , res.data.result.data.scope);

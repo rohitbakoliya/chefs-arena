@@ -5,14 +5,17 @@ import Dashboard from './components/dashboard/dashboard';
 import SelectVirtual from './components/virtual/selectContest/selectVirtual';
 import Problem from './components/virtual/problems/Problem';
 import ProblemsList from './components/virtual/problems/ProblemsList'
-import Timer from './components/timer/Timer';
 import User from './components/user/User';
-import Run from './components/run/run'
+import Run from './components/Ide/run'
 import SelectOngoing from './components/ongoing/selectOngoing';
 import OngoingProblemsList from './components/ongoing/OngoingProblemsList';
 import OngoingProblem from './components/ongoing/OngoingProblem';
 import Ranking from './components/ongoing/Ranking/Ranking'
-import Error404 from './components/404/Error404';
+import Error404 from './components/common/404/Error404';
+import ProtectedRoute from './routes/protectedRoute';
+import Auth from './components/auth/auth';
+
+import './App.css';
 
 class App extends Component{
   render(){
@@ -21,17 +24,18 @@ class App extends Component{
           <BrowserRouter>
             <Switch>
               <Route exact path='/' component={Root}/>
-              <Route path='/dashboard' component={Dashboard}/>
-              <Route path='/virtual' component={SelectVirtual}/>
-              <Route exact path='/contests' component={SelectOngoing}/>
-              <Route path='/contests/problems' component={OngoingProblemsList}/>
-              <Route path='/contests/:contestCode/problems/:problemCode' component={OngoingProblem}/>
-              <Route path='/contests/:contestCode/ranking' component={Ranking}/>
-              <Route exact path='/problems' component={ProblemsList}/>
-              <Route path='/problems/:problemCode' component={Problem}/>
-              <Route path='/user' component={User}/>
-              <Route path='/timer' component={Timer}/>
-              <Route path='/run/:problemCode' component={Run}/>
+              <Route exact path='/auth' component={Auth}/>
+              <ProtectedRoute path='/dashboard' component={Dashboard}/>
+              <ProtectedRoute path='/virtual' component={SelectVirtual}/>
+              <ProtectedRoute exact path='/contests' component={SelectOngoing}/>
+              <ProtectedRoute exact path='/contests/problems' component={OngoingProblemsList}/>
+              <ProtectedRoute exact path='/contests/:contestCode/problems/:problemCode' component={OngoingProblem}/>
+              <ProtectedRoute exact path='/contests/:contestCode/ranking' component={Ranking}/>
+              <ProtectedRoute exact path='/problems' component={ProblemsList}/>
+              <ProtectedRoute exact path='/problems/:problemCode' component={Problem}/>
+              <ProtectedRoute path='/user' component={User}/>
+              <ProtectedRoute path='/run/:problemCode' component={Run}/>
+              <ProtectedRoute path='/ide' component={Run}/>
               <Route component={Error404} />
               
             </Switch>

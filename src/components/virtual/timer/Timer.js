@@ -61,11 +61,15 @@ export default class Timer extends Component {
           contestStatus = 'Before start'
           }
           localStorage.setItem('contestStatus' , contestStatus);
-
-          var counterView = <div className="center" style={{ marginTop : 10 , paddingTop : 10}}>
-          <p style={{ margin: 0, padding: 0 ,fontSize :'1.2rem' }}> {contestStatus} </p>
-          {counter}
-        </div>
+          var counterView = <div className="center card" style={{ marginTop : 10 , paddingTop : 10}}>
+                    <div className="card-content">
+                         <div className="card-title">
+                              <strong>{contestStatus}</strong>
+                         </div>
+                         <div className="divider grey darken-2"></div>
+                         <div style={{fontSize: '20px'}}>{counter}</div>
+                    </div>
+          </div>
           return (
                this.state.startDate ? counterView : null
           )

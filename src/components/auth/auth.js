@@ -14,19 +14,20 @@ class Auth extends Component{
           @CHECKING FOR LOCAL STORAGE
           **/
           if (typeof(Storage) !== "undefined" ) {
-               if(parsed.code)
-               localStorage.setItem("authorization_code", parsed.code);
+               if(parsed.code) localStorage.setItem("authorization_code", parsed.code);
                else
                 console.log('code is not present in query');
              } else {
-                  alert('Sorry! No Web Storage support..')
+               alert('Sorry! No Web Storage support..')
                console.log(' Sorry! No Web Storage support..')
           } 
           if(localStorage.getItem('access_token')===null){
-               Utils.getAccessTokenFirstTime().then(()=>{
-                    this.setState({loading: false});
-               })
+               this.fetchData();
           }
+     }
+     fetchData = async()=>{
+          await Utils.getAccessTokenFirstTime();
+          this.setState({loading: false});
      }
      render(){
           return(

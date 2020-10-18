@@ -87,11 +87,9 @@ export default class SelectVirtual extends Component {
                let contestList =  JSON.parse(localStorage.getItem('contestList'));
                let dataForAutoComplete = {};
                
-// TODO : forEach makes async try to make it sync
                contestList = contestList.filter((contest)=>{
                     return contest.code.match(/cook/gi) || contest.name.match(/cook/gi) || contest.code.match(/ltime/gi) || contest.name.match(/lunch\s?time/gi);
                })
-               console.log(contestList);
                contestList.forEach( contest => {
                     dataForAutoComplete[contest.code] = null;
                     dataForAutoComplete[contest.name] = null;

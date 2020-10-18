@@ -34,6 +34,7 @@ Chef's Arena is a coding platform similar to other online judges, implemented us
 ```bash
 $ git clone https://github.com/rohitbakoliya/chefs-arena.git
 $ cd chefs-arena
+$ cp .env.example .env (edit it with your api key and secret key)
 $ npm install
 $ npm start
 ```

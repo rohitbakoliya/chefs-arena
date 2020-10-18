@@ -9,14 +9,14 @@ export default class Root extends Component{
           res : []          
      }
      
-     componentDidMount(){
-          if(localStorage.getItem("access_token")!==null){
-               localStorage.removeItem("access_token");
-               localStorage.removeItem("authorization_code");
-               localStorage.removeItem("refresh_token");
-               localStorage.removeItem("scope");
-          }
-     }
+     // componentDidMount(){
+     //      if(localStorage.getItem("access_token")!==null){
+     //           localStorage.removeItem("access_token");
+     //           localStorage.removeItem("authorization_code");
+     //           localStorage.removeItem("refresh_token");
+     //           localStorage.removeItem("scope");
+     //      }
+     // }
     
      render(){
           return(

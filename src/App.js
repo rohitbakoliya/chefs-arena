@@ -5,7 +5,6 @@ import Dashboard from './components/dashboard/dashboard';
 import SelectVirtual from './components/virtual/selectContest/selectVirtual';
 import Problem from './components/virtual/problems/Problem';
 import ProblemsList from './components/virtual/problems/ProblemsList'
-import Timer from './components/timer/Timer';
 import User from './components/user/User';
 import Run from './components/Ide/run'
 import SelectOngoing from './components/ongoing/selectOngoing';
@@ -35,7 +34,6 @@ class App extends Component{
               <ProtectedRoute exact path='/problems' component={ProblemsList}/>
               <ProtectedRoute exact path='/problems/:problemCode' component={Problem}/>
               <ProtectedRoute path='/user' component={User}/>
-              <ProtectedRoute path='/timer' component={Timer}/>
               <ProtectedRoute path='/run/:problemCode' component={Run}/>
               <ProtectedRoute path='/ide' component={Run}/>
               <Route component={Error404} />

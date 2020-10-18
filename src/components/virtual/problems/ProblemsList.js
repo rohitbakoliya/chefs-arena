@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NavBar from '../../common/navbar/nav';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import Timer from '../../timer/Timer';
+import Timer from '../timer/Timer';
 import Utils from '../../utils/utils';
 import Preloader from '../../common/Preloader/Preloader'
 export default class ProblemsList extends Component {
@@ -20,7 +20,6 @@ export default class ProblemsList extends Component {
           .then(res=>{
                const data = res.data.result.data.content.problemsList;
                const content = res.data.result.data.content;
-               console.log(content)
                if(content.isParent){
                     this.setState({
                          isParent : true,

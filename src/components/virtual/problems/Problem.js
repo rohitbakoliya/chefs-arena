@@ -23,7 +23,6 @@ export default class Problem extends Component {
 
           let problemsList =JSON.parse(localStorage.getItem('problemsList'));
           let content = problemsList.find(problem=>problem.problemCode === problemCode);
-          // console.log(content)
           this.setState({
                loading : false,
                problemCode : content.problemCode,

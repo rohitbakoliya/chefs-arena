@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from './config';
 
 const Utils = {
-     getAccessTokenFirstTime : async ()=>{
+     getAccessTokenFirstTime : ()=>{
           let oauth_config = {
                "grant_type": "authorization_code",
                "code": localStorage.getItem('authorization_code'),
@@ -22,7 +22,7 @@ const Utils = {
                alert('some error occurred try to login again')
           }); 
      },
-     generateAccessToken : async ()=>{
+     generateAccessToken : ()=>{
           // let oauth_details = {
           //      'authorization_code' : localStorage.getItem('authorization_code'),
           //      'access_token' : localStorage.getItem('access_token'),
@@ -36,7 +36,7 @@ const Utils = {
           }
           axios.post(config.access_token_endpoint, oauth_config ,  {headers : {"content-Type" : "application/json"}})
           .then((res)=> {
-               console.log('YEH WE GOT REFRESH TOKEN');
+               console.log('New REFRESH TOKEN');
                localStorage.setItem('access_token' , res.data.result.data.access_token);
                localStorage.setItem('refresh_token' , res.data.result.data.refresh_token);
                localStorage.setItem('scope' , res.data.result.data.scope);

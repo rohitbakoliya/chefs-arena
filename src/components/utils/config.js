@@ -16,7 +16,7 @@ if(process.env.NODE_ENV==="development"){
           'api_endpoint': 'https://api.codechef.com/',
           'authorization_code_endpoint': 'https://api.codechef.com/oauth/authorize',
           'access_token_endpoint': 'https://api.codechef.com/oauth/token',
-          'redirect_uri': 'https://chefs-arena-rohit.netlify.com/dashboard',
+          'redirect_uri': 'https://chefs-arena-rohit.netlify.com/auth',
           'website_base_url' : 'https://chefs-arena-rohit.netlify.com/'
      }
 }

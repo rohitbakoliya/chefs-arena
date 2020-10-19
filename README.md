@@ -12,6 +12,11 @@ Chef's Arena is a coding platform similar to other online judges, implemented us
 
 * Go to [Complete Guide](https://docs.google.com/presentation/d/1Dwo9V5oJQlxyXVn_QLnnFeW_yjr3vzd98-tNW7O4HXA/edit?usp=sharing)
 
+### Key features
+* Problem Statements rendering with Markworn and MathJax
+* Builtin IDE with popular themes and language-based highlighting
+* Virtual contest
+
 ### Prerequisites
 
 * [NodeJs](https://nodejs.org/en/)
@@ -34,7 +39,7 @@ Chef's Arena is a coding platform similar to other online judges, implemented us
 ```bash
 $ git clone https://github.com/rohitbakoliya/chefs-arena.git
 $ cd chefs-arena
-$ cp .env.example .env (edit it with your api key and secret key)
+$ cp .env.example .env (edit it with your api key and secret)
 $ npm install
 $ npm start
 ```
